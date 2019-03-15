@@ -1,0 +1,16 @@
+PODS:
+  - Styfler (0.1.0)
+
+DEPENDENCIES:
+  - Styfler (from `../`)
+
+EXTERNAL SOURCES:
+  Styfler:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Styfler: 7a30ae992f1fa745552f9deb2f6a8a2c2ac5ecd8
+
+PODFILE CHECKSUM: 23a481253487b66b8b5d75e4619f261f0e4b9776
+
+COCOAPODS: 1.6.1

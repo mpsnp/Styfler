@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "Styfler"
-  s.version      = "0.1"
-  s.summary      = ""
+  s.version      = "0.1.0"
+  s.summary      = "Functional styling/theming framework for iOS platform, written in swift."
   s.description  = <<-DESC
     Your description here.
   DESC
