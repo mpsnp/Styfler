@@ -10,8 +10,6 @@ import Foundation
 public protocol Stylable: AnyObject {
 }
 
-extension UIView: Stylable {}
-
 public protocol DefaultStylable: Stylable {
     associatedtype Theme: Styfler.Theme
 }
