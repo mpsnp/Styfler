@@ -12,7 +12,7 @@ import Styfler
 extension Style where Stylable: UIButton, Theme == AppTheme {
     static func primaryAction() -> Style {
         return .layer(cornerRadius: \.standard)
-            <> .layer(borderWidth: \.borderWidth, borderColor: \.inactive)
+            <> .layer(borderWidth: \.borderWidth, borderColor: \.border)
             <> .view(backgroundColor: \.secondary)
             <> .button(titleColor: \.buttonText)
     }

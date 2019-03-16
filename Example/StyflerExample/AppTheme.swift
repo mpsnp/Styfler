@@ -13,7 +13,7 @@ public struct AppTheme: Theme, Equatable {
     public struct Colors: Equatable {
         var primary: UIColor
         var secondary: UIColor
-        var inactive: UIColor
+        var border: UIColor
         var buttonText: UIColor
     }
 
@@ -39,15 +39,15 @@ extension UIView: DefaultStylable {
 extension AppTheme.Colors {
     static let light: AppTheme.Colors = .init(
         primary: .white,
-        secondary: .black,
-        inactive: .green,
+        secondary: .init(hex: 0xBABABA),
+        border: .init(hex: 0xCACACA),
         buttonText: .white
     )
 
     static let dark: AppTheme.Colors = .init(
         primary: .init(hex: 0x3E3D3C),
         secondary: .init(hex: 0xBABABA),
-        inactive: .init(hex: 0x008800),
+        border: .init(hex: 0x888888),
         buttonText: .black
     )
 }
@@ -63,10 +63,10 @@ extension AppTheme {
     )
 
     static let dark: AppTheme = AppTheme(
-        borderWidth: 5.0,
+        borderWidth: 3.0,
         colors: .dark,
         cornerRadiuses: .init(
-            standard: 16.0
+            standard: 12.0
         ),
         textStyles: .init()
     )
