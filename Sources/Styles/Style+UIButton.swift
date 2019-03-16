@@ -9,13 +9,13 @@ import Foundation
 
 public extension Style where Stylable: UIButton {
     static func title(text: String, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme in
+        return .init { button, theme, options in
             button.setTitle(text, for: state)
         }
     }
 
     static func title(color: KeyPath<Colors, UIColor>, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme in
+        return .init { button, theme, options in
             button.setTitleColor(theme[keyPath: \.colors >>> color], for: state)
         }
     }
@@ -25,7 +25,7 @@ public extension Style where Stylable: UIButton {
     //    }
 
     static func image(_ provider: ImageProvider, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme in
+        return .init { button, theme, options in
             button.setImage(provider.image, for: state)
         }
     }

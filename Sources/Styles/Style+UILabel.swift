@@ -9,15 +9,15 @@ import Foundation
 
 public extension Style where Stylable: UILabel {
     static func text(color: KeyPath<Colors, UIColor>) -> Style {
-        return Style(set: \.textColor, fromTheme: \.colors >>> color)
+        return Style(set: \.textColor, from: \.colors >>> color)
     }
 
     static func text(highlightedColor: KeyPath<Colors, UIColor>) -> Style {
-        return Style(set: \.highlightedTextColor, fromTheme: \.colors >>> highlightedColor)
+        return Style(set: \.highlightedTextColor, from: \.colors >>> highlightedColor)
     }
 
     static func text(font: KeyPath<TextStyles, UIFont>) -> Style {
-        return Style(set: \.font, fromTheme: \.textStyles >>> font)
+        return Style(set: \.font, from: \.textStyles >>> font)
     }
 
     static func text(alignment: NSTextAlignment = .natural) -> Style {

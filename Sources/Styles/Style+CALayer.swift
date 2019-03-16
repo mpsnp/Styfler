@@ -11,41 +11,40 @@ import UIKit
 extension CALayer: Stylable {}
 
 public extension Style where Stylable: CALayer {
-    init<V>(
-        set target: ReferenceWritableKeyPath<Stylable, V>,
-        from source: KeyPath<Theme, V>,
-        animated: Bool
-    ) {
-        self.init { layer, theme in
 
-            if animated, let keyPathString = target._kvcKeyPathString {
-                let animation = CABasicAnimation(keyPath: keyPathString)
-                animation.fromValue = layer[keyPath: target]
-                animation.toValue = theme[keyPath: source]
-                animation.duration = 0.25
-                layer.add(animation, forKey: keyPathString)
-            }
+    private static func animate<V>(layer: Stylable, at kp: ReferenceWritableKeyPath<Stylable, V>, to value: V, with options: StylingOptions) {
+        if case let .layers(duration, timingName) = options.animation, let keyPathString = kp._kvcKeyPathString {
+            let animation = CABasicAnimation(keyPath: keyPathString)
+            animation.fromValue = layer[keyPath: kp]
+            animation.toValue = value
+            animation.timingFunction = .init(name: timingName)
+            animation.duration = duration
+            layer.add(animation, forKey: keyPathString)
+        }
+        layer[keyPath: kp] = value
+    }
 
-            layer[keyPath: target] = theme[keyPath: source]
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, from source: KeyPath<Theme, V>) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: theme[keyPath: source], with: options)
         }
     }
 
-    init<V>(
-        set target: ReferenceWritableKeyPath<Stylable, V>,
-        to value: V,
-        animated: Bool
-    ) {
-        self.init { layer, theme in
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, from source: KeyPath<Theme, V>) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: theme[keyPath: source], with: options)
+        }
+    }
 
-            if animated, let keyPathString = target._kvcKeyPathString {
-                let animation = CABasicAnimation(keyPath: keyPathString)
-                animation.fromValue = layer[keyPath: target]
-                animation.toValue = value
-                animation.duration = 0.25
-                layer.add(animation, forKey: keyPathString)
-            }
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, to value: V) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: value, with: options)
+        }
+    }
 
-            layer[keyPath: target] = value
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, to value: V) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: value, with: options)
         }
     }
 }

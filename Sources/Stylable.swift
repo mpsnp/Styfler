@@ -15,8 +15,8 @@ public protocol DefaultStylable: Stylable {
 }
 
 public extension DefaultStylable {
-    func style(with theme: Theme) -> Styler<Self, Theme> {
-        return Styler(instance: self, theme: theme)
+    func style(with theme: Theme, options: StylingOptions = .animateLayers()) -> Styler<Self, Theme> {
+        return Styler(instance: self, theme: theme, options: options)
     }
 
     static var s: Style<Self, Theme>.Type {

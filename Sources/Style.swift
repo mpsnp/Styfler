@@ -8,67 +8,71 @@
 
 import Foundation
 
-public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.Theme {
-    private let style: (Stylable, Theme) -> Void
+public struct StylingOptions {
+    public enum Animation {
+        case none
+        case layers(duration: Double, timing: CAMediaTimingFunctionName)
+    }
 
-    public init(style: @escaping (Stylable, Theme) -> Void) {
+    public var animation: Animation
+}
+
+public extension StylingOptions {
+    static let none: StylingOptions = .init(animation: .none)
+
+    static func animateLayers(duration: Double = 0.25, timing: CAMediaTimingFunctionName = .default) -> StylingOptions {
+        return .init(animation: .layers(duration: duration, timing: timing))
+    }
+}
+
+public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.Theme {
+    private let style: (Stylable, Theme, StylingOptions) -> Void
+
+    public init(style: @escaping (Stylable, Theme, StylingOptions) -> Void) {
         self.style = style
     }
 
-    public func apply(to stylable: Stylable, with theme: Theme) {
-        style(stylable, theme)
+    public func apply(to stylable: Stylable, with theme: Theme, options: StylingOptions = .none) {
+        style(stylable, theme, options)
     }
 }
 
 extension Style {
-    public init<V>(copy source: KeyPath<Theme, V>, to destination: ReferenceWritableKeyPath<Stylable, V>) {
-        style = { stylable, theme in
-            stylable[keyPath: destination] = theme[keyPath: source]
-        }
-    }
-
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, fromTheme source: KeyPath<Theme, V>) {
-        style = { stylable, theme in
+    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, from source: KeyPath<Theme, V>) {
+        style = { stylable, theme, options in
             stylable[keyPath: target] = theme[keyPath: source]
         }
     }
 
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, fromSelf source: KeyPath<Stylable, V>) {
-        style = { stylable, theme in
+    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, copying source: KeyPath<Stylable, V>) {
+        style = { stylable, theme, options in
             stylable[keyPath: target] = stylable[keyPath: source]
         }
     }
 
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, fromTheme source: KeyPath<Theme, V>) {
-        style = { stylable, theme in
+    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, from source: KeyPath<Theme, V>) {
+        style = { stylable, theme, options in
             stylable[keyPath: target] = theme[keyPath: source]
         }
     }
 
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, fromSelf source: KeyPath<Stylable, V>) {
-        style = { stylable, theme in
+    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, copying source: KeyPath<Stylable, V>) {
+        style = { stylable, theme, options in
             stylable[keyPath: target] = stylable[keyPath: source]
         }
     }
 
     public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, to value: V) {
-        style = { stylable, theme in
+        style = { stylable, theme, options in
             stylable[keyPath: target] = value
         }
     }
 }
 
 public extension Style {
-    func appending(style: Style) -> Style {
-        return .init { stylable, theme in
-            self.apply(to: stylable, with: theme)
-            style.apply(to: stylable, with: theme)
-        }
-    }
-
     func lift<Parent>(to kp: KeyPath<Parent, Stylable>) -> Style<Parent, Theme> where Parent: AnyObject {
-        return .init { parent, theme in
-            self.apply(to: parent[keyPath: kp], with: theme)
+        return .init { parent, theme, options in
+            self.apply(to: parent[keyPath: kp], with: theme, options: options)
         }
     }
 
@@ -79,11 +83,14 @@ public extension Style {
 
 public extension Style {
     static var empty: Style {
-        return .init { _, _ in }
+        return .init { _, _, _  in }
     }
 
     static func <> (lhs: Style, rhs: Style) -> Style {
-        return lhs.appending(style: rhs)
+        return .init { stylable, theme, options in
+            lhs.apply(to: stylable, with: theme, options: options)
+            rhs.apply(to: stylable, with: theme, options: options)
+        }
     }
 
     static func <> (lhs: Style.Type, rhs: Style) -> Style {
