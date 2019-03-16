@@ -11,9 +11,10 @@ import Styfler
 
 extension Style where Stylable: UIButton, Theme == AppTheme {
     static func primaryAction() -> Style {
-        return .view(backgroundColor: \.secondary)
-            <> .layer(cornerRadius: \.standard)
-            <> .title(color: \.buttonText)
+        return .layer(cornerRadius: \.standard)
+            <> .layer(borderWidth: \.borderWidth, borderColor: \.inactive)
+            <> .view(backgroundColor: \.secondary)
+            <> .button(titleColor: \.buttonText)
     }
 }
 
@@ -23,17 +24,18 @@ extension UIViewController: DefaultStylable {
 
 extension Style where Stylable == ViewController, Theme == AppTheme {
     static func standard() -> Style {
-        return \.view <<< .view(backgroundColor: \.primary)
-            <> \.lightButton <<< .primaryAction()
-            <> \.darkButton <<< .primaryAction()
+        return \.view
+                <<< .view(backgroundColor: \.primary)
+            <> \.lightButton
+                <<< .primaryAction()
+            <> \.darkButton
+                <<< .primaryAction()
     }
 }
 
 final class ViewController: UIViewController {
     @IBOutlet var lightButton: UIButton!
     @IBOutlet var darkButton: UIButton!
-
-    let animator: UIViewPropertyAnimator = .init(duration: 0.25, curve: .easeInOut)
 
     var theme: AppTheme = .light {
         didSet { apply(theme: theme) }
@@ -46,12 +48,9 @@ final class ViewController: UIViewController {
     }
 
     func apply(theme: AppTheme) {
-        animator.addAnimations {
-            self.style(with: theme) <| .standard()
+        self.style(with: theme) <| .standard()
 
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-        animator.startAnimation()
+        self.setNeedsStatusBarAppearanceUpdate()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

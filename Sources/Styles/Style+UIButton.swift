@@ -8,25 +8,25 @@
 import Foundation
 
 public extension Style where Stylable: UIButton {
-    static func title(text: String, state: UIControl.State = .normal) -> Style {
+    static func button(title: String, state: UIControl.State = .normal) -> Style {
         return .init { button, theme, options in
-            button.setTitle(text, for: state)
+            button.setTitle(title, for: state)
         }
     }
 
-    static func title(color: KeyPath<Colors, UIColor>, state: UIControl.State = .normal) -> Style {
+    static func button(titleColor: KeyPath<Colors, UIColor>, state: UIControl.State = .normal) -> Style {
         return .init { button, theme, options in
-            button.setTitleColor(theme[keyPath: \.colors >>> color], for: state)
+            button.setTitleColor(theme[keyPath: \.colors >>> titleColor], for: state)
         }
     }
 
-    //    static func title(style: KeyPath<TextStyles, TextStyles.Style>) -> Style {
-    //        return Style(set: \.titleLabel!.font, from: \.textStyles >>> style >>> \.font)
-    //    }
+    static func button(titleStyle: KeyPath<TextStyles, TextStyle>) -> Style {
+        return Style(set: \.titleLabel!.font, from: \.textStyles >>> titleStyle >>> \.font)
+    }
 
-    static func image(_ provider: ImageProvider, state: UIControl.State = .normal) -> Style {
+    static func button(image: ImageProvider, state: UIControl.State = .normal) -> Style {
         return .init { button, theme, options in
-            button.setImage(provider.image, for: state)
+            button.setImage(image.image, for: state)
         }
     }
 }

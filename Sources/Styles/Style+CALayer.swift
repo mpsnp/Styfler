@@ -13,7 +13,7 @@ extension CALayer: Stylable {}
 public extension Style where Stylable: CALayer {
 
     private static func animate<V>(layer: Stylable, at kp: ReferenceWritableKeyPath<Stylable, V>, to value: V, with options: StylingOptions) {
-        if case let .layers(duration, timingName) = options.animation, let keyPathString = kp._kvcKeyPathString {
+        if case let .animated(duration, timingName) = options.animation, let keyPathString = kp._kvcKeyPathString {
             let animation = CABasicAnimation(keyPath: keyPathString)
             animation.fromValue = layer[keyPath: kp]
             animation.toValue = value

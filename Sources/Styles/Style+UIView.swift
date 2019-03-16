@@ -43,8 +43,13 @@ public extension Style where Stylable: UIView {
         return \.layer <<< .init(set: \.masksToBounds, to: masksToBounds)
     }
 
-    static func border(width: CGFloat = 1, color: KeyPath<Colors, UIColor>) -> Style {
-        return \.layer <<< .init(set: \.borderWidth, to: width)
-            <> \.layer <<< .init(set: \.borderColor, from: \.colors >>> color >>> \.cgColor)
+    static func layer(borderWidth: CGFloat = 1, borderColor: KeyPath<Colors, UIColor>) -> Style {
+        return \.layer <<< .init(set: \.borderWidth, to: borderWidth)
+            <> \.layer <<< .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
+    }
+
+    static func layer(borderWidth: KeyPath<Theme, CGFloat>, borderColor: KeyPath<Colors, UIColor>) -> Style {
+        return \.layer <<< .init(set: \.borderWidth, from: borderWidth)
+            <> \.layer <<< .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
     }
 }

@@ -13,6 +13,7 @@ public struct AppTheme: Theme, Equatable {
     public struct Colors: Equatable {
         var primary: UIColor
         var secondary: UIColor
+        var inactive: UIColor
         var buttonText: UIColor
     }
 
@@ -23,6 +24,8 @@ public struct AppTheme: Theme, Equatable {
     public struct TextStyles: Equatable {
 
     }
+
+    public var borderWidth: CGFloat
 
     public var colors: Colors
     public var cornerRadiuses: CornerRadiuses
@@ -37,18 +40,21 @@ extension AppTheme.Colors {
     static let light: AppTheme.Colors = .init(
         primary: .white,
         secondary: .black,
+        inactive: .green,
         buttonText: .white
     )
 
     static let dark: AppTheme.Colors = .init(
         primary: .init(hex: 0x3E3D3C),
         secondary: .init(hex: 0xBABABA),
+        inactive: .init(hex: 0x008800),
         buttonText: .black
     )
 }
 
 extension AppTheme {
     static let light: AppTheme = AppTheme(
+        borderWidth: 1.0,
         colors: .light,
         cornerRadiuses: .init(
             standard: 4.0
@@ -57,6 +63,7 @@ extension AppTheme {
     )
 
     static let dark: AppTheme = AppTheme(
+        borderWidth: 5.0,
         colors: .dark,
         cornerRadiuses: .init(
             standard: 16.0

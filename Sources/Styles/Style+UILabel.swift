@@ -8,37 +8,37 @@
 import Foundation
 
 public extension Style where Stylable: UILabel {
-    static func text(color: KeyPath<Colors, UIColor>) -> Style {
-        return Style(set: \.textColor, from: \.colors >>> color)
+    static func label(textColor: KeyPath<Colors, UIColor>) -> Style {
+        return Style(set: \.textColor, from: \.colors >>> textColor)
     }
 
-    static func text(highlightedColor: KeyPath<Colors, UIColor>) -> Style {
-        return Style(set: \.highlightedTextColor, from: \.colors >>> highlightedColor)
+    static func label(highlightedTextColor: KeyPath<Colors, UIColor>) -> Style {
+        return Style(set: \.highlightedTextColor, from: \.colors >>> highlightedTextColor)
     }
 
-    static func text(font: KeyPath<TextStyles, UIFont>) -> Style {
+    static func label(font: KeyPath<TextStyles, UIFont>) -> Style {
         return Style(set: \.font, from: \.textStyles >>> font)
     }
 
-    static func text(alignment: NSTextAlignment = .natural) -> Style {
-        return Style(set: \.textAlignment, to: alignment)
+    static func label(textAlignment: NSTextAlignment = .natural) -> Style {
+        return Style(set: \.textAlignment, to: textAlignment)
     }
 
-    static func text<S: TextStyle>(
+    static func label<S: TextStyle>(
         style: KeyPath<TextStyles, S>,
-        color: KeyPath<Colors, UIColor>,
-        alignment: NSTextAlignment = .natural
+        textColor: KeyPath<Colors, UIColor>,
+        textAlignment: NSTextAlignment = .natural
     ) -> Style {
-        return .text(color: color)
-            <> .text(font: style >>> \.font)
-            <> .text(alignment: alignment)
+        return .label(textColor: textColor)
+            <> .label(font: style >>> \.font)
+            <> .label(textAlignment: textAlignment)
     }
 
-    static func text(normal: String) -> Style {
-        return Style(set: \.text, to: normal)
+    static func label(text: String) -> Style {
+        return Style(set: \.text, to: text)
     }
 
-    static func text(attributed: NSAttributedString) -> Style {
-        return Style(set: \.attributedText, to: attributed)
+    static func label(attributedText: NSAttributedString) -> Style {
+        return Style(set: \.attributedText, to: attributedText)
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 public struct StylingOptions {
     public enum Animation {
         case none
-        case layers(duration: Double, timing: CAMediaTimingFunctionName)
+        case animated(duration: Double, timing: CAMediaTimingFunctionName)
     }
 
     public var animation: Animation
@@ -21,7 +21,7 @@ public extension StylingOptions {
     static let none: StylingOptions = .init(animation: .none)
 
     static func animateLayers(duration: Double = 0.25, timing: CAMediaTimingFunctionName = .default) -> StylingOptions {
-        return .init(animation: .layers(duration: duration, timing: timing))
+        return .init(animation: .animated(duration: duration, timing: timing))
     }
 }
 
