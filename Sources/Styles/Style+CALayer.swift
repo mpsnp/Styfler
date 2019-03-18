@@ -47,4 +47,16 @@ public extension Style where Stylable: CALayer {
             Style.animate(layer: layer, at: target, to: value, with: options)
         }
     }
+
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, over grabber: @escaping (Stylable) -> V) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: grabber(layer), with: options)
+        }
+    }
+
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, over grabber: @escaping (Stylable) -> V) {
+        self.init { layer, theme, options in
+            Style.animate(layer: layer, at: target, to: grabber(layer), with: options)
+        }
+    }
 }
