@@ -82,6 +82,26 @@ public extension Style {
 }
 
 public extension Style {
+    public static func `if`(_ condition: KeyPath<Stylable, Bool>, _ then: Style) -> Style {
+        return Style { stylable, theme, options in
+            if stylable[keyPath: condition] {
+                then.apply(to: stylable, with: theme, options: options)
+            }
+        }
+    }
+
+    public static func `if`(_ condition: KeyPath<Stylable, Bool>, then: Style, else alternative: Style) -> Style {
+        return Style { stylable, theme, options in
+            if stylable[keyPath: condition] {
+                then.apply(to: stylable, with: theme, options: options)
+            } else {
+                alternative.apply(to: stylable, with: theme, options: options)
+            }
+        }
+    }
+}
+
+public extension Style {
     static var empty: Style {
         return .init { _, _, _  in }
     }
