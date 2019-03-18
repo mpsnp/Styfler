@@ -48,15 +48,15 @@ public extension Style where Stylable: CALayer {
         }
     }
 
-    init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, over grabber: @escaping (Stylable) -> V) {
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, over grabber: @escaping (Stylable, Theme, StylingOptions) -> V) {
         self.init { layer, theme, options in
-            Style.animate(layer: layer, at: target, to: grabber(layer), with: options)
+            Style.animate(layer: layer, at: target, to: grabber(layer, theme, options), with: options)
         }
     }
 
-    init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, over grabber: @escaping (Stylable) -> V) {
+    init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, over grabber: @escaping (Stylable, Theme, StylingOptions) -> V) {
         self.init { layer, theme, options in
-            Style.animate(layer: layer, at: target, to: grabber(layer), with: options)
+            Style.animate(layer: layer, at: target, to: grabber(layer, theme, options), with: options)
         }
     }
 }
