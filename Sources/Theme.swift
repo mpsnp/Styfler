@@ -18,7 +18,7 @@ public protocol AttributedTextStyle: TextStyle {
 
 public protocol ShadowStyle {
     var color: UIColor { get }
-    var opacity: CGFloat { get }
+    var opacity: Float { get }
     var radius: CGFloat { get }
     var offset: CGSize { get }
 }
