@@ -24,12 +24,27 @@ public struct AppTheme: Theme, Equatable {
     public struct TextStyles: Equatable {
 
     }
+    public struct ShadowStyles: Equatable {
+        public struct Style: Equatable, ShadowStyle {
+            public var color: UIColor
+            public var opacity: Float
+            public var radius: CGFloat
+            public var offset: CGSize
+        }
+
+        public var base: Style
+    }
+    public struct GradientStyles: Equatable {
+
+    }
 
     public var borderWidth: CGFloat
 
     public var colors: Colors
     public var cornerRadiuses: CornerRadiuses
     public var textStyles: TextStyles
+    public var shadowStyles: ShadowStyles
+    public var gradientStyles: GradientStyles
 }
 
 extension UIView: DefaultStylable {
@@ -40,15 +55,31 @@ extension AppTheme.Colors {
     static let light: AppTheme.Colors = .init(
         primary: .white,
         secondary: .init(hex: 0xBABABA),
-        border: .init(hex: 0xCACACA),
+        border: .init(hex: 0x888888),
         buttonText: .white
     )
 
     static let dark: AppTheme.Colors = .init(
-        primary: .init(hex: 0x3E3D3C),
+        primary: .white,
         secondary: .init(hex: 0xBABABA),
         border: .init(hex: 0x888888),
-        buttonText: .black
+        buttonText: .white
+    )
+}
+
+extension AppTheme.ShadowStyles.Style {
+    static let big: AppTheme.ShadowStyles.Style = AppTheme.ShadowStyles.Style(
+        color: .init(hex: 0x444444),
+        opacity: 1.0,
+        radius: 20,
+        offset: CGSize(width: 10, height: 10)
+    )
+
+    static let small: AppTheme.ShadowStyles.Style = AppTheme.ShadowStyles.Style(
+        color: .init(hex: 0x888888),
+        opacity: 1.0,
+        radius: 4,
+        offset: .zero
     )
 }
 
@@ -59,7 +90,9 @@ extension AppTheme {
         cornerRadiuses: .init(
             standard: 4.0
         ),
-        textStyles: .init()
+        textStyles: .init(),
+        shadowStyles: .init(base: .small),
+        gradientStyles: .init()
     )
 
     static let dark: AppTheme = AppTheme(
@@ -68,7 +101,9 @@ extension AppTheme {
         cornerRadiuses: .init(
             standard: 12.0
         ),
-        textStyles: .init()
+        textStyles: .init(),
+        shadowStyles: .init(base: .big),
+        gradientStyles: .init()
     )
 }
 

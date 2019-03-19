@@ -13,15 +13,26 @@ extension CALayer: Stylable {}
 public extension Style where Stylable: CALayer {
 
     private static func animate<V>(layer: Stylable, at kp: ReferenceWritableKeyPath<Stylable, V>, to value: V, with options: StylingOptions) {
-        if case let .animated(duration, timingName) = options.animation, let keyPathString = kp._kvcKeyPathString {
+        if case .animated = options.animation, let keyPathString = kp._kvcKeyPathString {
+            CATransaction.begin()
             let animation = CABasicAnimation(keyPath: keyPathString)
             animation.fromValue = layer[keyPath: kp]
             animation.toValue = value
-            animation.timingFunction = .init(name: timingName)
-            animation.duration = duration
+
+            if layer.animation(forKey: keyPathString) != nil {
+                layer.removeAnimation(forKey: keyPathString)
+            }
+
             layer.add(animation, forKey: keyPathString)
+
+            CATransaction.setCompletionBlock {
+                layer[keyPath: kp] = value
+            }
+
+            CATransaction.commit()
+        } else {
+            layer[keyPath: kp] = value
         }
-        layer[keyPath: kp] = value
     }
 
     init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, from source: KeyPath<Theme, V>) {
@@ -58,5 +69,23 @@ public extension Style where Stylable: CALayer {
         self.init { layer, theme, options in
             Style.animate(layer: layer, at: target, to: grabber(layer, theme, options), with: options)
         }
+    }
+
+    static func layer(cornerRadius: KeyPath<CornerRadiuses, CGFloat>) -> Style {
+        return .init(set: \.cornerRadius, from: \.cornerRadiuses >>> cornerRadius)
+    }
+
+    static func layer(masksToBounds: Bool) -> Style {
+        return .init(set: \.masksToBounds, to: masksToBounds)
+    }
+
+    static func layer(borderWidth: CGFloat = 1, borderColor: KeyPath<Colors, UIColor>) -> Style {
+        return .init(set: \.borderWidth, to: borderWidth)
+            <> .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
+    }
+
+    static func layer(borderWidth: KeyPath<Theme, CGFloat>, borderColor: KeyPath<Colors, UIColor>) -> Style {
+        return .init(set: \.borderWidth, from: borderWidth)
+            <> .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
     }
 }

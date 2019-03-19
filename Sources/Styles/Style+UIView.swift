@@ -36,20 +36,81 @@ public extension Style where Stylable: UIView {
 // MARK: - Layer wrappers
 public extension Style where Stylable: UIView {
     static func layer(cornerRadius: KeyPath<CornerRadiuses, CGFloat>) -> Style {
-        return \.layer <<< .init(set: \.cornerRadius, from: \.cornerRadiuses >>> cornerRadius)
+        return \.layer <<< .layer(cornerRadius: cornerRadius)
     }
 
     static func layer(masksToBounds: Bool) -> Style {
-        return \.layer <<< .init(set: \.masksToBounds, to: masksToBounds)
+        return \.layer <<< .layer(masksToBounds: masksToBounds)
     }
 
     static func layer(borderWidth: CGFloat = 1, borderColor: KeyPath<Colors, UIColor>) -> Style {
-        return \.layer <<< .init(set: \.borderWidth, to: borderWidth)
-            <> \.layer <<< .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
+        return \.layer <<< .layer(borderWidth: borderWidth, borderColor: borderColor)
     }
 
     static func layer(borderWidth: KeyPath<Theme, CGFloat>, borderColor: KeyPath<Colors, UIColor>) -> Style {
-        return \.layer <<< .init(set: \.borderWidth, from: borderWidth)
-            <> \.layer <<< .init(set: \.borderColor, from: \.colors >>> borderColor >>> \.cgColor)
+        return \.layer <<< .layer(borderWidth: borderWidth, borderColor: borderColor)
+    }
+
+    static func shadow<S: ShadowStyle>(style: KeyPath<ShadowStyles, S>) -> Style {
+        return \.layer <<< .init(set: \.shadowColor, from: \.shadowStyles >>> style >>> \.color.cgColor)
+            <> \.layer <<< .init(set: \.shadowOpacity, from: \.shadowStyles >>> style >>> \.opacity)
+            <> \.layer <<< .init(set: \.shadowRadius, from: \.shadowStyles >>> style >>> \.radius)
+            <> \.layer <<< .init(set: \.shadowOffset, from: \.shadowStyles >>> style >>> \.offset)
+            <> \.layer <<< .init(set: \.shadowPath) { layer, _, _ in UIBezierPath(roundedRect: layer.bounds, cornerRadius: layer.cornerRadius).cgPath }
+    }
+
+    static func gradient<G: GradientStyle>(style: KeyPath<GradientStyles, G>) -> Style where G.BaseTheme == Theme {
+        return \.layer <<< .init(set: \.gradientLayer.startPoint, from: \.gradientStyles >>> style >>> \.startPoint)
+            <> \.layer <<< .init(set: \.gradientLayer.endPoint, from: \.gradientStyles >>> style >>> \.endPoint)
+            <> \.layer <<< .init(set: \.gradientLayer.frame, copying: \.bounds)
+            <> \.layer <<< .init(set: \.gradientLayer.cornerRadius, copying: \.cornerRadius)
+            <> \.layer <<< .init(set: \.gradientLayer.colors) { _, theme, _ in theme[keyPath: \.gradientStyles >>> style].colors(for: theme) }
+    }
+}
+
+extension GradientStyle {
+    func colors(for theme: BaseTheme) -> [CGColor] {
+        return [
+            theme[keyPath: \.colors >>> startColor >>> \.cgColor],
+            theme[keyPath: \.colors >>> endColor >>> \.cgColor]
+        ]
+    }
+}
+
+extension String {
+    static let gradientLayerName: String = "Gradient"
+}
+
+extension CALayer {
+    var gradientLayer: CAGradientLayer {
+        return findSublayerOrCreate(named: .gradientLayerName)
+    }
+}
+
+extension CALayer {
+    func sendSublayerToBack(layer: CALayer) {
+        layer.removeFromSuperlayer()
+        self.insertSublayer(layer, at: 0)
+    }
+
+    func findSublayer(named name: String) -> CALayer? {
+        return sublayers?.first(where: { $0.name == name })
+    }
+
+    func findSublayerOrCreate<Layer: CALayer>(named name: String, index: UInt32 = 0) -> Layer {
+        let result: Layer
+        if let foundLayer = findSublayer(named: name) as? Layer {
+            result = foundLayer
+        } else {
+            result = Layer()
+            result.name = name
+            insertSublayer(result, at: index)
+        }
+
+        if sublayers?.first != result {
+            sendSublayerToBack(layer: result)
+        }
+
+        return result
     }
 }

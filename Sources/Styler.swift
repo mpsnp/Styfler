@@ -40,17 +40,19 @@ public final class Styler<Stylable: Styfler.Stylable, Theme: Styfler.Theme> {
     }
 
     public func apply(style: Style<Stylable, Theme>) {
-        switch options.animation {
+        switch self.options.animation {
         case let .animated(duration, timing):
-            animator = .init(duration: duration, curve: timing.curve) {
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(duration)
+            CATransaction.setAnimationTimingFunction(.init(name: timing))
+
+            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: duration, delay: 0, options: .curveEaseInOut, animations: {
                 style.apply(to: self.instance, with: self.theme, options: self.options)
-            }
-            animator?.addCompletion { _ in
-                self.animator = nil
-            }
-            animator?.startAnimation()
+            })
+
+            CATransaction.commit()
         case .none:
-            style.apply(to: instance, with: theme, options: options)
+            style.apply(to: self.instance, with: self.theme, options: self.options)
         }
     }
 

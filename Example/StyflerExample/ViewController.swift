@@ -15,6 +15,7 @@ extension Style where Stylable: UIButton, Theme == AppTheme {
             <> .layer(borderWidth: \.borderWidth, borderColor: \.border)
             <> .view(backgroundColor: \.secondary)
             <> .button(titleColor: \.buttonText)
+            <> .shadow(style: \.base)
     }
 }
 
@@ -60,7 +61,9 @@ final class ViewController: UIViewController {
     }
 
     @IBAction func lightTouched() {
-        theme = .light
+        theme = theme == .light
+            ? .dark
+            : .light
     }
 
     @IBAction func darkTouched() {
