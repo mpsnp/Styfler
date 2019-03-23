@@ -7,8 +7,34 @@
 
 import Foundation
 
-// MARK: - Deprecated
 
+// MARK: - UIButton styles
+public extension Style where Stylable: UIButton {
+    
+    static func title(_ title: String, state: UIControl.State = .normal) -> Style {
+        return .init { button, theme, options in
+            button.setTitle(title, for: state)
+        }
+    }
+
+    static func titleColor(_ titleColor: KeyPath<Colors, UIColor>, state: UIControl.State = .normal) -> Style {
+        return .init { button, theme, options in
+            button.setTitleColor(theme[keyPath: \.colors >>> titleColor], for: state)
+        }
+    }
+
+    static func titleStyle(_ titleStyle: KeyPath<TextStyles, TextStyle>) -> Style {
+        return Style(set: \.titleLabel!.font, from: \.textStyles >>> titleStyle >>> \.font)
+    }
+
+    static func image(_ image: ImageProvider, state: UIControl.State = .normal) -> Style {
+        return .init { button, theme, options in
+            button.setImage(image.image, for: state)
+        }
+    }
+}
+
+// MARK: - Deprecations
 public extension Style where Stylable: UIButton {
     @available(*, deprecated, renamed: "title(_:state:)")
     static func button(title: String, state: UIControl.State = .normal) -> Style {
@@ -35,32 +61,4 @@ public extension Style where Stylable: UIButton {
             button.setImage(image.image, for: state)
         }
     }
-}
-
-// MARK: -
-
-public extension Style where Stylable: UIButton {
-
-    static func title(_ title: String, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme, options in
-            button.setTitle(title, for: state)
-        }
-    }
-
-    static func titleColor(_ titleColor: KeyPath<Colors, UIColor>, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme, options in
-            button.setTitleColor(theme[keyPath: \.colors >>> titleColor], for: state)
-        }
-    }
-
-    static func titleStyle(_ titleStyle: KeyPath<TextStyles, TextStyle>) -> Style {
-        return Style(set: \.titleLabel!.font, from: \.textStyles >>> titleStyle >>> \.font)
-    }
-
-    static func image(_ image: ImageProvider, state: UIControl.State = .normal) -> Style {
-        return .init { button, theme, options in
-            button.setImage(image.image, for: state)
-        }
-    }
-
 }

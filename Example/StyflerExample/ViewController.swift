@@ -12,7 +12,7 @@ import Styfler
 extension Style where Stylable: UIButton, Theme == AppTheme {
     static func primaryAction() -> Style {
         return .cornerRadius(\.standard)
-            <> .border(withWidth: \.borderWidth, andColor: \.border)
+            <> .border(width: \.borderWidth, color: \.border)
             <> .backgroundColor(\.secondary)
             <> .titleColor(\.buttonText)
             <> .shadow(style: \.base)
@@ -26,7 +26,7 @@ extension UIViewController: DefaultStylable {
 extension Style where Stylable == ViewController, Theme == AppTheme {
     static func standard() -> Style {
         return \.view
-            <<< .backgroundColor(\.primary)
+                <<< .backgroundColor(\.primary)
             <> \.lightButton
                 <<< .primaryAction()
             <> \.darkButton
