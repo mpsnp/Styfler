@@ -27,6 +27,8 @@ extension Style where Stylable == ViewController, Theme == AppTheme {
     static func standard() -> Style {
         return \.view
                 <<< .backgroundColor(\.primary)
+            <> \.barButtonItem
+                <<< .tintColor(\.secondary)
             <> \.lightButton
                 <<< .primaryAction()
             <> \.darkButton
@@ -35,6 +37,9 @@ extension Style where Stylable == ViewController, Theme == AppTheme {
 }
 
 final class ViewController: UIViewController {
+
+    @IBOutlet var barButtonItem: UIBarButtonItem!
+
     @IBOutlet var lightButton: UIButton!
     @IBOutlet var darkButton: UIButton!
 

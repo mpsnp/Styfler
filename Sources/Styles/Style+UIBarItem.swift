@@ -9,7 +9,7 @@ import Foundation
 
 extension UIBarItem: Stylable {}
 
-extension Style where Stylable: UIBarItem {
+public extension Style where Stylable: UIBarItem {
     static func title(_ title: String) -> Style {
         return Style(set: \.title, to: title)
     }
@@ -40,7 +40,7 @@ extension Style where Stylable: UIBarItem {
     }
 }
 
-extension Style where Stylable: UIBarButtonItem {
+public extension Style where Stylable: UIBarButtonItem {
     static func style(_ style: UIBarButtonItem.Style) -> Style {
         return Style(set: \.style, to: style)
     }
@@ -54,7 +54,7 @@ extension Style where Stylable: UIBarButtonItem {
     }
 }
 
-extension Style where Stylable: UITabBarItem {
+public extension Style where Stylable: UITabBarItem {
     static func selectedImage(_ selectedImage: ImageProvider) -> Style {
         return Style(set: \.selectedImage, to: selectedImage.image)
     }
