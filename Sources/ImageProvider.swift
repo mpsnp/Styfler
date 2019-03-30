@@ -16,3 +16,9 @@ extension UIImage: ImageProvider {
         return self
     }
 }
+
+extension Collection where Element == ImageProvider {
+    var images: [UIImage] {
+        return map { $0.image }
+    }
+}
