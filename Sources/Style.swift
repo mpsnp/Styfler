@@ -67,6 +67,12 @@ extension Style {
             stylable[keyPath: target] = value
         }
     }
+
+    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, to value: V) {
+        style = { stylable, theme, options in
+            stylable[keyPath: target] = .some(value)
+        }
+    }
 }
 
 public extension Style {
