@@ -23,12 +23,9 @@ public extension Style where Stylable: UIImageView {
         return .init(set: \.highlightedAnimationImages, to: highlightedAnimationImages.images)
     }
 
-    static func animationDuration(_ animationDuration: TimeInterval) -> Style {
-        return .init(set: \.animationDuration, to: animationDuration)
-    }
-
-    static func animationRepeatCount(_ animationRepeatCount: Int) -> Style {
-        return .init(set: \.animationRepeatCount, to: animationRepeatCount)
+    static func animation(duration: TimeInterval, repeatCount: Int = 0) -> Style {
+        return .init(set: \.animationDuration, to: duration)
+            <> .init(set: \.animationRepeatCount, to: repeatCount)
     }
 
     static func isHighlighted(_ isHighlighted: Bool) -> Style {
