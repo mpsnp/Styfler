@@ -29,10 +29,6 @@ extension Style where Stylable: UIButton, Theme == AppTheme {
     }
 }
 
-extension UIViewController: DefaultStylable {
-    public typealias Theme = AppTheme
-}
-
 extension Style where Stylable == ViewController, Theme == AppTheme {
     static var standard: Style {
         return \.view
@@ -63,7 +59,7 @@ final class ViewController: UIViewController {
     }
 
     func apply(theme: AppTheme) {
-        self.style(with: theme).apply(style: .standard)
+        style(with: theme).apply(style: .standard)
 
         self.setNeedsStatusBarAppearanceUpdate()
     }

@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-extension CALayer: Stylable {}
-
 // MARK: - CALayer style initializers
 public extension Style where Stylable: CALayer {
 

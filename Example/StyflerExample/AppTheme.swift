@@ -47,10 +47,6 @@ public struct AppTheme: Theme, Equatable {
     public var gradientStyles: GradientStyles
 }
 
-extension UIView: DefaultStylable {
-    public typealias Theme = AppTheme
-}
-
 extension AppTheme.Colors {
     static let light: AppTheme.Colors = .init(
         primary: .white,

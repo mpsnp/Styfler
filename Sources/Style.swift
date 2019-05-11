@@ -23,6 +23,8 @@ public extension StylingOptions {
     static func animated(duration: Double = 0.25, curve: UIView.AnimationCurve = .easeInOut) -> StylingOptions {
         return .init(animation: .animated(duration: duration, curve: curve))
     }
+
+    static let `default`: StylingOptions = .animated()
 }
 
 public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.Theme {
@@ -34,6 +36,16 @@ public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.T
 
     public func apply(to stylable: Stylable, with theme: Theme, options: StylingOptions = .none) {
         style(stylable, theme, options)
+    }
+}
+
+public extension Style {
+    static var s: Style.Type {
+        return Style.self
+    }
+
+    var s: Style.Type {
+        return Style.self
     }
 }
 

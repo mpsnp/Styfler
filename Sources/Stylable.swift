@@ -11,21 +11,15 @@ public protocol Stylable: AnyObject {
 }
 
 public extension Stylable {
-    func style<T: Theme>(with theme: T, options: StylingOptions = .animated()) -> Styler<Self, T> {
+    func style<T: Theme>(with theme: T, options: StylingOptions = .default) -> Styler<Self, T> {
         return Styler(instance: self, theme: theme, options: options)
     }
-}
 
-public protocol DefaultStylable: Stylable {
-    associatedtype Theme: Styfler.Theme
-}
-
-public extension DefaultStylable {
-    static var s: Style<Self, Theme>.Type {
-        return Style<Self, Theme>.self
-    }
-
-    var s: Style<Self, Theme>.Type {
-        return Style<Self, Theme>.self
+    static func <<< <T: Theme>(stylable: Self, theme: T) -> Styler<Self, T> {
+        return Styler(instance: stylable, theme: theme, options: .default)
     }
 }
+
+extension CALayer: Stylable {}
+extension UIView: Stylable {}
+extension UIViewController: Stylable {}

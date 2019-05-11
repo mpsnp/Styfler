@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-extension UIView: Stylable {}
-
 // MARK: - UIView styles
 public extension Style where Stylable: UIView {
 
