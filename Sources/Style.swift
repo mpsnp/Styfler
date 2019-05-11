@@ -20,7 +20,7 @@ public struct StylingOptions {
 public extension StylingOptions {
     static let none: StylingOptions = .init(animation: .none)
 
-    static func animateLayers(duration: Double = 0.25, curve: UIView.AnimationCurve = .easeInOut) -> StylingOptions {
+    static func animated(duration: Double = 0.25, curve: UIView.AnimationCurve = .easeInOut) -> StylingOptions {
         return .init(animation: .animated(duration: duration, curve: curve))
     }
 }

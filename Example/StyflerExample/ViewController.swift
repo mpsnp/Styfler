@@ -10,12 +10,22 @@ import UIKit
 import Styfler
 
 extension Style where Stylable: UIButton, Theme == AppTheme {
-    static func primaryAction() -> Style {
+    private static func defaultButton() -> Style {
         return .cornerRadius(\.standard)
             <> .border(width: \.borderWidth, color: \.border)
-            <> .backgroundColor(\.secondary)
-            <> .titleColor(\.buttonText)
             <> .shadow(style: \.base)
+    }
+
+    static func primaryAction() -> Style {
+        return .defaultButton()
+            <> .titleColor(\.secondary)
+            <> .backgroundColor(\.primary)
+    }
+
+    static func secondaryAction() -> Style {
+        return .defaultButton()
+            <> .titleColor(\.buttonText)
+            <> .backgroundColor(\.secondary)
     }
 }
 
@@ -24,7 +34,7 @@ extension UIViewController: DefaultStylable {
 }
 
 extension Style where Stylable == ViewController, Theme == AppTheme {
-    static func standard() -> Style {
+    static var standard: Style {
         return \.view
                 <<< .backgroundColor(\.primary)
             <> \.barButtonItem
@@ -32,14 +42,13 @@ extension Style where Stylable == ViewController, Theme == AppTheme {
             <> \.lightButton
                 <<< .primaryAction()
             <> \.darkButton
-                <<< .primaryAction()
+                <<< .secondaryAction()
     }
 }
 
 final class ViewController: UIViewController {
 
     @IBOutlet var barButtonItem: UIBarButtonItem!
-
     @IBOutlet var lightButton: UIButton!
     @IBOutlet var darkButton: UIButton!
 
@@ -54,7 +63,7 @@ final class ViewController: UIViewController {
     }
 
     func apply(theme: AppTheme) {
-        self.style(with: theme) <| .standard()
+        self.style(with: theme).apply(style: .standard)
 
         self.setNeedsStatusBarAppearanceUpdate()
     }
