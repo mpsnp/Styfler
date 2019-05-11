@@ -47,9 +47,9 @@ public protocol Theme {
 }
 
 public extension Style {
-    public typealias Colors = Theme.Colors
-    public typealias CornerRadiuses = Theme.CornerRadiuses
-    public typealias TextStyles = Theme.TextStyles
-    public typealias ShadowStyles = Theme.ShadowStyles
-    public typealias GradientStyles = Theme.GradientStyles
+    typealias Colors = Theme.Colors
+    typealias CornerRadiuses = Theme.CornerRadiuses
+    typealias TextStyles = Theme.TextStyles
+    typealias ShadowStyles = Theme.ShadowStyles
+    typealias GradientStyles = Theme.GradientStyles
 }

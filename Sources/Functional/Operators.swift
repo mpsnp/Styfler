@@ -91,8 +91,10 @@ precedencegroup infixr9 {
     higherThan: infixl9
 }
 
-infix operator <|: infixr0
-infix operator |>: infixl1
+infix operator <| : infixr0
+infix operator |> : infixl1
+
+infix operator <~ : infixr0
 
 // Semigroupoid
 infix operator >>>: infixr9

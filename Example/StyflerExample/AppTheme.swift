@@ -113,7 +113,7 @@ public extension UIColor {
     /// - Parameters:
     ///   - hex: rgb representation of color
     ///   - alpha: value in percentage: from 0 to 1, defaults to 1
-    public convenience init(hex: UInt32, alpha: CGFloat = 1) {
+    convenience init(hex: UInt32, alpha: CGFloat = 1) {
         self.init(
             red: CGFloat(hex >> (8 * 2) & 255) / 255,
             green: CGFloat(hex >> (8 * 1) & 255) / 255,

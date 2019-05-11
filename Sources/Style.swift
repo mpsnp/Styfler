@@ -11,7 +11,7 @@ import Foundation
 public struct StylingOptions {
     public enum Animation {
         case none
-        case animated(duration: Double, timing: CAMediaTimingFunctionName)
+        case animated(duration: Double, curve: UIView.AnimationCurve)
     }
 
     public var animation: Animation
@@ -20,15 +20,15 @@ public struct StylingOptions {
 public extension StylingOptions {
     static let none: StylingOptions = .init(animation: .none)
 
-    static func animateLayers(duration: Double = 0.25, timing: CAMediaTimingFunctionName = .default) -> StylingOptions {
-        return .init(animation: .animated(duration: duration, timing: timing))
+    static func animateLayers(duration: Double = 0.25, curve: UIView.AnimationCurve = .easeInOut) -> StylingOptions {
+        return .init(animation: .animated(duration: duration, curve: curve))
     }
 }
 
 public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.Theme {
     private let style: (Stylable, Theme, StylingOptions) -> Void
 
-    public init(style: @escaping (Stylable, Theme, StylingOptions) -> Void) {
+    private init(style: @escaping (Stylable, Theme, StylingOptions) -> Void) {
         self.style = style
     }
 
@@ -37,40 +37,50 @@ public struct Style<Stylable, Theme> where Stylable: AnyObject, Theme: Styfler.T
     }
 }
 
-extension Style {
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, from source: KeyPath<Theme, V>) {
-        style = { stylable, theme, options in
-            stylable[keyPath: target] = theme[keyPath: source]
-        }
+public extension Style {
+    static func custom(style: @escaping (Stylable, Theme, StylingOptions) -> Void) -> Style {
+        return .init(style: style)
     }
+}
 
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, copying source: KeyPath<Stylable, V>) {
-        style = { stylable, theme, options in
-            stylable[keyPath: target] = stylable[keyPath: source]
-        }
-    }
-
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, from source: KeyPath<Theme, V>) {
-        style = { stylable, theme, options in
-            stylable[keyPath: target] = theme[keyPath: source]
-        }
-    }
-
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, copying source: KeyPath<Stylable, V>) {
-        style = { stylable, theme, options in
-            stylable[keyPath: target] = stylable[keyPath: source]
-        }
-    }
-
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V>, to value: V) {
-        style = { stylable, theme, options in
+public extension Style {
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V>, to value: V) -> Style {
+        return .init { stylable, theme, options in
             stylable[keyPath: target] = value
         }
     }
 
-    public init<V>(set target: ReferenceWritableKeyPath<Stylable, V?>, to value: V) {
-        style = { stylable, theme, options in
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V?>, to value: V) -> Style {
+        return .init { stylable, theme, options in
             stylable[keyPath: target] = .some(value)
+        }
+    }
+}
+
+public extension Style {
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V>, from source: KeyPath<Theme, V>) -> Style {
+        return .init { stylable, theme, options in
+            stylable[keyPath: target] = theme[keyPath: source]
+        }
+    }
+
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V?>, from source: KeyPath<Theme, V>) -> Style {
+        return .init { stylable, theme, options in
+            stylable[keyPath: target] = theme[keyPath: source]
+        }
+    }
+}
+
+public extension Style {
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V>, copying source: KeyPath<Stylable, V>) -> Style {
+        return .init { stylable, theme, options in
+            stylable[keyPath: target] = stylable[keyPath: source]
+        }
+    }
+
+    static func set<V>(_ target: ReferenceWritableKeyPath<Stylable, V?>, copying source: KeyPath<Stylable, V>) -> Style {
+        return .init { stylable, theme, options in
+            stylable[keyPath: target] = stylable[keyPath: source]
         }
     }
 }
@@ -88,7 +98,7 @@ public extension Style {
 }
 
 public extension Style {
-    public static func `if`(_ condition: KeyPath<Stylable, Bool>, _ then: Style) -> Style {
+    static func `if`(_ condition: KeyPath<Stylable, Bool>, _ then: Style) -> Style {
         return Style { stylable, theme, options in
             if stylable[keyPath: condition] {
                 then.apply(to: stylable, with: theme, options: options)
@@ -96,7 +106,7 @@ public extension Style {
         }
     }
 
-    public static func `if`(_ condition: KeyPath<Stylable, Bool>, then: Style, else alternative: Style) -> Style {
+    static func `if`(_ condition: KeyPath<Stylable, Bool>, then: Style, else alternative: Style) -> Style {
         return Style { stylable, theme, options in
             if stylable[keyPath: condition] {
                 then.apply(to: stylable, with: theme, options: options)
