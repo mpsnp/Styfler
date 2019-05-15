@@ -22,7 +22,7 @@ public extension Style where Stylable: UIButton {
         }
     }
 
-    static func titleStyle(_ titleStyle: KeyPath<TextStyles, TextStyle>) -> Style {
+    static func titleStyle<S: TextStyle>(_ titleStyle: KeyPath<TextStyles, S>) -> Style {
         return .set(\.titleLabel!.font, from: \.textStyles >>> titleStyle >>> \.font)
     }
 
