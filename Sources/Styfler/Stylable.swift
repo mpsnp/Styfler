@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol Stylable: AnyObject {
 }
@@ -20,6 +21,4 @@ public extension Stylable {
     }
 }
 
-extension CALayer: Stylable {}
-extension UIView: Stylable {}
 extension UIViewController: Stylable {}

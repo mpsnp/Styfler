@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 // MARK: - UIView styles
+extension UIView: Stylable {}
+
 public extension Style where Stylable: UIView {
 
     static func clipsToBounds(_ clipsToBounds: Bool = true) -> Style {

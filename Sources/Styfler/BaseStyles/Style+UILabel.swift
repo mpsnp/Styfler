@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - UILabel styles
 public extension Style where Stylable: UILabel {

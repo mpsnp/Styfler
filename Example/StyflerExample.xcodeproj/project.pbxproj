@@ -109,6 +109,8 @@
 			dependencies = (
 			);
 			name = StyflerExample;
+			packageProductDependencies = (
+			);
 			productName = StyflerExample;
 			productReference = D3A8DBEE223C46D600B268B8 /* StyflerExample.app */;
 			productType = "com.apple.product-type.application";
@@ -137,6 +139,8 @@
 				Base,
 			);
 			mainGroup = D3A8DBE5223C46D600B268B8;
+			packageReferences = (
+			);
 			productRefGroup = D3A8DBEF223C46D600B268B8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

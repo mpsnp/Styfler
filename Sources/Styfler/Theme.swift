@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol TextStyle {
     var font: UIFont { get }

@@ -5,6 +5,8 @@
 //  Created by Valeriy Mikholapov on 24/03/2019.
 //
 
+import UIKit
+
 public extension Style where Stylable: UIActivityIndicatorView {
 
     static func hidesWhenStopped(_ hidesWhenStopped: Bool) -> Style {

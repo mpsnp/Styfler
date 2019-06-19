@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Style where Stylable: UITableView {
     static func rowHeight(_ rowHeight: CGFloat) -> Style {

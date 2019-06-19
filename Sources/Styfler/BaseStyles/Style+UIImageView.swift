@@ -5,6 +5,8 @@
 //  Created by Valeriy Mikholapov on 30/03/2019.
 //
 
+import UIKit
+
 public extension Style where Stylable: UIImageView {
 
     static func image(_ image: ImageProvider) -> Style {

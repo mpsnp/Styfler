@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 // MARK: - CALayer style initializers
+extension CALayer: Stylable {}
+
 public extension Style where Stylable: CALayer {
 
     private static func animate<V>(layer: Stylable, at kp: ReferenceWritableKeyPath<Stylable, V>, to value: V, with options: StylingOptions) {

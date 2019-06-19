@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Style where Stylable: UITabBar {
     static func barStyle(_ style: UIBarStyle) -> Style {

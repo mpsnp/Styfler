@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - UIButton styles
 public extension Style where Stylable: UIButton {

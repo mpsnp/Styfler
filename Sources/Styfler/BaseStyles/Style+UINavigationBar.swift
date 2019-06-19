@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Style where Stylable: UINavigationBar {
     static func titleTextAttributes(
