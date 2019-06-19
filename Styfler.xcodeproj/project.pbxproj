@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		52D6D9871BEFF229002C0205 /* Styfler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Styfler.framework */; };
-		8933C7851EB5B820000D00A4 /* Styfler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* Styfler.swift */; };
-		8933C7861EB5B820000D00A4 /* Styfler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* Styfler.swift */; };
-		8933C7871EB5B820000D00A4 /* Styfler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* Styfler.swift */; };
-		8933C7881EB5B820000D00A4 /* Styfler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* Styfler.swift */; };
 		8933C78E1EB5B82C000D00A4 /* StyflerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* StyflerTests.swift */; };
 		8933C78F1EB5B82C000D00A4 /* StyflerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* StyflerTests.swift */; };
 		8933C7901EB5B82D000D00A4 /* StyflerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* StyflerTests.swift */; };
+		D3A8DBDD223C0DE900B268B8 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A8DBDC223C0DE900B268B8 /* Style.swift */; };
+		D3A8DBE0223C39C400B268B8 /* Style+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A8DBDF223C39C400B268B8 /* Style+UIView.swift */; };
+		D3A8DBE2223C44A200B268B8 /* Styler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A8DBE1223C44A200B268B8 /* Styler.swift */; };
+		D3A8DBE4223C44F900B268B8 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A8DBE3223C44F900B268B8 /* Operators.swift */; };
 		DD7502881C68FEDE006590AF /* Styfler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Styfler.framework */; };
 		DD7502921C690C7A006590AF /* Styfler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Styfler.framework */; };
 /* End PBXBuildFile section */
@@ -49,10 +49,13 @@
 		52D6D9E21BEFFF6E002C0205 /* Styfler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Styfler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* Styfler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Styfler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* Styfler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Styfler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8933C7841EB5B820000D00A4 /* Styfler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styfler.swift; sourceTree = "<group>"; };
 		8933C7891EB5B82A000D00A4 /* StyflerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyflerTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Styfler.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Styfler.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* StyflerTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StyflerTests.plist; sourceTree = "<group>"; };
+		D3A8DBDC223C0DE900B268B8 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		D3A8DBDF223C39C400B268B8 /* Style+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Style+UIView.swift"; sourceTree = "<group>"; };
+		D3A8DBE1223C44A200B268B8 /* Styler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styler.swift; sourceTree = "<group>"; };
+		D3A8DBE3223C44F900B268B8 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Styfler-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Styfler-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75028D1C690C7A006590AF /* Styfler-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Styfler-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -149,7 +152,10 @@
 		8933C7811EB5B7E0000D00A4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				8933C7841EB5B820000D00A4 /* Styfler.swift */,
+				D3A8DBDE223C39A400B268B8 /* Styles */,
+				D3A8DBDC223C0DE900B268B8 /* Style.swift */,
+				D3A8DBE1223C44A200B268B8 /* Styler.swift */,
+				D3A8DBE3223C44F900B268B8 /* Operators.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -161,6 +167,14 @@
 			);
 			name = Tests;
 			path = Tests/StyflerTests;
+			sourceTree = "<group>";
+		};
+		D3A8DBDE223C39A400B268B8 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				D3A8DBDF223C39C400B268B8 /* Style+UIView.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		DD7502721C68FC1B006590AF /* Frameworks */ = {
@@ -347,11 +361,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = "Styfler";
+				ORGANIZATIONNAME = Styfler;
 				TargetAttributes = {
 					52D6D97B1BEFF229002C0205 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					52D6D9851BEFF229002C0205 = {
 						CreatedOnToolsVersion = 7.1;
@@ -459,7 +473,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7851EB5B820000D00A4 /* Styfler.swift in Sources */,
+				D3A8DBE2223C44A200B268B8 /* Styler.swift in Sources */,
+				D3A8DBE4223C44F900B268B8 /* Operators.swift in Sources */,
+				D3A8DBE0223C39C400B268B8 /* Style+UIView.swift in Sources */,
+				D3A8DBDD223C0DE900B268B8 /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +492,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7871EB5B820000D00A4 /* Styfler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +499,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7881EB5B820000D00A4 /* Styfler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +506,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7861EB5B820000D00A4 /* Styfler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +701,7 @@
 		52D6D9941BEFF229002C0205 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Configs/StyflerTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -700,6 +715,7 @@
 		52D6D9951BEFF229002C0205 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Configs/StyflerTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

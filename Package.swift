@@ -1,15 +1,17 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Styfler",
+    platforms: [.iOS(.v11)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "Styfler",
-            targets: ["Styfler"]),
+            targets: ["Styfler"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -20,9 +22,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Styfler",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "StyflerTests",
-            dependencies: ["Styfler"]),
+            dependencies: ["Styfler"]
+        ),
     ]
 )
